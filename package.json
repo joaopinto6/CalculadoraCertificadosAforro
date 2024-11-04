@@ -1,0 +1,28 @@
+{
+  "name": "calculadoracertificadosaforro",
+  "version": "1.0.0",
+  "description": "website that allows to easily calculate how much savings you have in \"Certificados de Aforro\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joaopinto6/CalculadoraCertificadosAforro.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/joaopinto6/CalculadoraCertificadosAforro/issues"
+  },
+  "homepage": "https://github.com/joaopinto6/CalculadoraCertificadosAforro#readme",
+  "dependencies": {
+    "cheerio": "^1.0.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "googleapis": "^144.0.0",
+    "multer": "^1.4.5-lts.1",
+    "node-fetch": "^3.3.2"
+  }
+}
