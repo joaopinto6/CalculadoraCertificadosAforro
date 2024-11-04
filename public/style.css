@@ -64,6 +64,18 @@ h1 {
     justify-content: center;
 }
 
+.password-form input[type="password"] {
+    width: 100%; /* Makes both elements full width within their container */
+    padding: 0.5rem; /* Ensures consistent padding */
+    box-sizing: border-box; /* Prevents padding from affecting width */
+}
+
+.upload-form input {
+    width: 100%; /* Makes both elements full width within their container */
+    padding: 0.5rem; /* Ensures consistent padding */
+    box-sizing: border-box; /* Prevents padding from affecting width */
+}
+
 #personal-results {
     display: flex;
     align-items: center;
