@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Savings Tracker</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div class="container">
         <h1>Savings Tracker</h1>
-        
+
         <div class="tabs">
             <button class="tab-btn" onclick="showSection('personal')">Personal Savings</button>
             <button class="tab-btn" onclick="showSection('upload')">Upload File</button>
@@ -20,7 +22,9 @@
                 <input type="password" id="password" placeholder="Enter password">
                 <button onclick="fetchPersonalSavings()">View Savings</button>
             </div>
-            <div id="personal-results" class="results"></div>
+            <div id="personal-results" class="results">
+                <div id="spinner" class="spinner" style="display: none;"></div>
+            </div>
         </section>
 
         <section id="upload" class="section hidden">
@@ -58,7 +62,7 @@
                         <th>Units</th>
                         <th>Value</th>
                     </tr>`;
-            
+
             data.savings.forEach(item => {
                 html += `<tr>
                     <td>${item.type}</td>
@@ -67,9 +71,9 @@
                     <td>${item.value.toFixed(2)}€</td>
                 </tr>`;
             });
-            
+
             html += '</table>';
-            
+
             if (data.fileInfo) {
                 html += `
                     <div class="file-info">
@@ -77,14 +81,20 @@
                         ${data.fileInfo.hadHeaders ? '<p>Headers were detected and removed</p>' : ''}
                     </div>`;
             }
-            
+
             container.innerHTML = html;
+            container.style.flexDirection = "column";
         }
 
         async function fetchPersonalSavings() {
             const password = document.getElementById('password').value;
             const resultDiv = document.getElementById('personal-results');
-            
+            const spinner = document.getElementById('spinner');
+
+            // Show the spinner and hide the password form
+            spinner.style.display = 'block';
+            document.querySelector('.password-form').style.display = 'none';
+
             try {
                 const response = await fetch('/api/personal-savings', {
                     method: 'POST',
@@ -92,7 +102,7 @@
                     body: JSON.stringify({ password })
                 });
                 const data = await response.json();
-                
+
                 if (response.ok) {
                     displayResults(data, 'personal-results');
                 } else {
@@ -100,13 +110,17 @@
                 }
             } catch (error) {
                 resultDiv.innerHTML = '<div class="error">Failed to fetch savings</div>';
+            } finally {
+                // Hide spinner once loading is complete
+                spinner.style.display = 'none';
             }
         }
+
 
         async function uploadFile() {
             const fileInput = document.getElementById('file');
             const resultDiv = document.getElementById('upload-results');
-            
+
             if (!fileInput.files[0]) {
                 resultDiv.innerHTML = '<div class="error">Please select a file</div>';
                 return;
@@ -121,7 +135,7 @@
                     body: formData
                 });
                 const data = await response.json();
-                
+
                 if (response.ok) {
                     displayResults(data, 'upload-results');
                 } else {
@@ -133,4 +147,5 @@
         }
     </script>
 </body>
+
 </html>
