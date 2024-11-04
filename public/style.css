@@ -1,0 +1,129 @@
+:root {
+    --bg-color: #1a1a1a;
+    --text-color: #ffffff;
+    --primary-color: #4CAF50;
+    --secondary-color: #2d2d2d;
+    --hover-color: #3d8b40;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+.container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 1rem;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.tabs {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 1rem;
+    background-color: var(--secondary-color);
+    border: none;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.tab-btn:hover {
+    background-color: var(--hover-color);
+}
+
+.tab-btn.active {
+    background-color: var(--primary-color);
+}
+
+.section {
+    background-color: var(--secondary-color);
+    padding: 2rem;
+    border-radius: 4px;
+}
+
+.hidden {
+    display: none;
+}
+
+input[type="password"],
+input[type="file"] {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    background-color: var(--bg-color);
+    border: 1px solid var(--text-color);
+    color: var(--text-color);
+}
+
+button {
+    width: 100%;
+    padding: 0.5rem;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: var(--hover-color);
+}
+
+.total-section {
+    background-color: var(--primary-color);
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.total-amount {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-top: 0.5rem;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+th, td {
+    padding: 0.5rem;
+    text-align: left;
+    border-bottom: 1px solid var(--text-color);
+}
+
+th {
+    background-color: var(--primary-color);
+}
+
+.file-info {
+    margin-top: 1rem;
+    padding: 0.5rem;
+    background-color: var(--secondary-color);
+    border-radius: 4px;
+}
+
+.error {
+    color: #ff6b6b;
+    margin: 1rem 0;
+    padding: 0.5rem;
+    background-color: rgba(255, 107, 107, 0.1);
+    border-radius: 4px;
+}
