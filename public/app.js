@@ -78,14 +78,14 @@ function displayResults(data) {
                         <td>${row.type.toUpperCase()}</td>
                         <td>${row.date}</td>
                         <td>${row.units}</td>
-                        <td>€${row.value.toFixed(2)}</td>
+                        <td>${row.value.toFixed(2)} €</td>
                     </tr>
                 `).join('')}
             </tbody>
             <tfoot>
                 <tr>
                     <td colspan="3" style="text-align: right">Total:</td>
-                    <td>€${data.total.toFixed(2)}</td>
+                    <td>${data.total.toFixed(2)} €</td>
                 </tr>
             </tfoot>
         </table>
