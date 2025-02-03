@@ -34,11 +34,11 @@ Para qualquer utilizador que pretenda calcular o valor dos seus certificados:
    ```
    | type | date       | units |
    |------|------------|-------|
-   | b    | 2002-10-08 | 100   |
-   | b    | 2002-12-06 | 100   |
+   | b    | 08/10/2002 | 100   |
+   | b    | 06/12/2002 | 100   |
    ```
    - type: tipo do certificado (ex: 'b')
-   - date: data de subscrição (formato YYYY-MM-DD)
+   - date: data de subscrição (formato DD/MM/YYYY)
    - units: número de unidades subscritas
 3. Carregue o ficheiro utilizando o botão "Choose File"
 4. Clique em "Calculate" para obter o valor atual
