@@ -80,7 +80,6 @@ app.post('/api/upload', async (req, res) => {
         };
       });
 
-    console.log('Processed rows:', validRows);
     res.json(await processSavings(validRows));
   } catch (error) {
     console.error('Upload error:', error);
