@@ -2,6 +2,8 @@ async function fetchSheetData() {
     const password = document.getElementById('password').value;
     if (!password) return alert('Please enter password');
 
+    showLoader();
+
     try {
         const response = await fetch('/api/sheet-data', {
             method: 'POST',
@@ -17,6 +19,8 @@ async function fetchSheetData() {
         displayResults(data);
     } catch (error) {
         alert(error.message);
+    } finally {
+        hideLoader();
     }
 }
 
@@ -28,6 +32,7 @@ async function uploadFile() {
     formData.append('file', fileInput.files[0]);
 
     try {
+        showLoader();
         const response = await fetch('/api/upload', {
             method: 'POST',
             body: formData
@@ -41,7 +46,18 @@ async function uploadFile() {
         displayResults(data);
     } catch (error) {
         alert(error.message);
+    } finally {
+        hideLoader();
     }
+}
+
+function showLoader() {
+    document.getElementById('results').innerHTML = '<div class="loader"></div>';
+}
+
+function hideLoader() {
+    const loader = document.querySelector('.loader');
+    if (loader) loader.remove();
 }
 
 function displayResults(data) {
