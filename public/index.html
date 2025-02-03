@@ -1,151 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Savings Tracker</title>
+    <title>Gestor de Certificados</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
     <div class="container">
-        <h1>Savings Tracker</h1>
-
-        <div class="tabs">
-            <button class="tab-btn" onclick="showSection('personal')">Personal Savings</button>
-            <button class="tab-btn" onclick="showSection('upload')">Upload File</button>
+        <h1>Gestor de Certificados</h1>
+        
+        <div class="section">
+            <input type="password" id="password" placeholder="Enter password">
+            <button onclick="fetchSheetData()">My Personal Savings</button>
         </div>
 
-        <section id="personal" class="section hidden">
-            <div class="password-form">
-                <input type="password" id="password" placeholder="Enter password">
-                <button onclick="fetchPersonalSavings()">View Savings</button>
-            </div>
-            <div id="personal-results" class="results">
-                <div id="spinner" class="spinner" style="display: none;"></div>
-            </div>
-        </section>
+        <div class="section">
+            <input type="file" id="excelFile" accept=".xlsx,.xls">
+            <button onclick="uploadFile()">Upload Excel File</button>
+        </div>
 
-        <section id="upload" class="section hidden">
-            <div class="upload-form">
-                <input type="file" id="file" accept=".csv,.xlsx">
-                <button onclick="uploadFile()">Calculate Savings</button>
-            </div>
-            <div id="upload-results" class="results"></div>
-        </section>
+        <div id="results"></div>
     </div>
 
-    <script>
-        function showSection(sectionId) {
-            document.querySelectorAll('.section').forEach(section => {
-                section.classList.add('hidden');
-            });
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            document.getElementById(sectionId).classList.remove('hidden');
-            event.target.classList.add('active');
-        }
+    <footer>
+        <p>Valores calculados com base em <a href="https://www.igcp.pt/pt/aforristas/produtos-de-aforro/certificados-de-aforro" target="_blank">Certificados de Aforro</a></p>
+    </footer>
 
-        function displayResults(data, elementId) {
-            const container = document.getElementById(elementId);
-            let html = `
-                <div class="total-section">
-                    <h2>Total Savings</h2>
-                    <div class="total-amount">${data.total}€</div>
-                </div>
-                <table>
-                    <tr>
-                        <th>Type</th>
-                        <th>Date</th>
-                        <th>Units</th>
-                        <th>Value</th>
-                    </tr>`;
-
-            data.savings.forEach(item => {
-                html += `<tr>
-                    <td>${item.type}</td>
-                    <td>${item.date}</td>
-                    <td>${item.units}</td>
-                    <td>${item.value.toFixed(2)}€</td>
-                </tr>`;
-            });
-
-            html += '</table>';
-
-            if (data.fileInfo) {
-                html += `
-                    <div class="file-info">
-                        <p>File processed: ${data.fileInfo.rowsProcessed} rows</p>
-                        ${data.fileInfo.hadHeaders ? '<p>Headers were detected and removed</p>' : ''}
-                    </div>`;
-            }
-
-            container.innerHTML = html;
-            container.style.flexDirection = "column";
-        }
-
-        async function fetchPersonalSavings() {
-            const password = document.getElementById('password').value;
-            const resultDiv = document.getElementById('personal-results');
-            const spinner = document.getElementById('spinner');
-
-            // Show the spinner and hide the password form
-            spinner.style.display = 'block';
-            document.querySelector('.password-form').style.display = 'none';
-
-            try {
-                const response = await fetch('/api/personal-savings', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ password })
-                });
-                const data = await response.json();
-
-                if (response.ok) {
-                    displayResults(data, 'personal-results');
-                } else {
-                    resultDiv.innerHTML = `<div class="error">${data.error}</div>`;
-                }
-            } catch (error) {
-                resultDiv.innerHTML = '<div class="error">Failed to fetch savings</div>';
-            } finally {
-                // Hide spinner once loading is complete
-                spinner.style.display = 'none';
-            }
-        }
-
-
-        async function uploadFile() {
-            const fileInput = document.getElementById('file');
-            const resultDiv = document.getElementById('upload-results');
-
-            if (!fileInput.files[0]) {
-                resultDiv.innerHTML = '<div class="error">Please select a file</div>';
-                return;
-            }
-
-            const formData = new FormData();
-            formData.append('file', fileInput.files[0]);
-
-            try {
-                const response = await fetch('/api/upload', {
-                    method: 'POST',
-                    body: formData
-                });
-                const data = await response.json();
-
-                if (response.ok) {
-                    displayResults(data, 'upload-results');
-                } else {
-                    resultDiv.innerHTML = `<div class="error">${data.error}</div>`;
-                }
-            } catch (error) {
-                resultDiv.innerHTML = '<div class="error">Failed to process file</div>';
-            }
-        }
-    </script>
+    <script src="app.js"></script>
 </body>
-
 </html>
